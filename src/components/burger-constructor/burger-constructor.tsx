@@ -32,8 +32,9 @@ export const BurgerConstructor: FC = () => {
       return <Preloader />;
     }
 
-    dispatch(createOrder(ingredients));
-    dispatch(clearConstructor());
+    dispatch(createOrder(ingredients))
+      .then(() => dispatch(clearConstructor()))
+      .catch((err) => console.log(err));
   };
   const closeOrderModal = () => {
     dispatch(resetOrderModal());

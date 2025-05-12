@@ -26,10 +26,7 @@ export const createOrder = createAsyncThunk(
   }
 );
 
-export const getOrders = createAsyncThunk('order/getAll', async () => {
-  const response = await getOrdersApi();
-  return response;
-});
+export const getOrders = createAsyncThunk('order/getAll', getOrdersApi);
 
 export const getOrderByNumber = createAsyncThunk(
   'orders/getByNumber',

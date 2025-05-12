@@ -4,10 +4,7 @@ import { TIngredient } from '@utils-types';
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/getAll',
-  async () => {
-    const response = await getIngredientsApi();
-    return response;
-  }
+  getIngredientsApi
 );
 
 type TIngredientsState = {

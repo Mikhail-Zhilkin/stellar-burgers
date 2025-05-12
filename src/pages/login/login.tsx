@@ -12,12 +12,7 @@ export const Login: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }))
-      .unwrap()
-      .then(() => {
-        navigate('/', { replace: true });
-      })
-      .catch((err) => console.log(err));
+    dispatch(loginUser({ email, password }));
   };
 
   return (
