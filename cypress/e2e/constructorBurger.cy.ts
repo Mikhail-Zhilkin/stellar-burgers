@@ -13,7 +13,7 @@ describe('Тесты для страницы конструктора бурге
     it('Открытие модального окна ингредиента', () => {
       cy.contains('li', 'Краторная булка N-200i').find('a').click();
       cy.get(`[data-cy=modal]`).contains('h3', 'Детали ингредиента');
-      cy.contains('h3', 'Краторная булка N-200i');
+      cy.get(`[data-cy=modal]`).contains('h3', 'Краторная булка N-200i');
     });
 
     it('Закрытие по клику на крестик', () => {
@@ -22,6 +22,7 @@ describe('Тесты для страницы конструктора бурге
         .contains('h3', 'Детали ингредиента')
         .get(`[data-cy=closeButton]`)
         .click();
+      cy.get(`[data-cy=modals]`).find(`[data-cy=modal]`).should('not.exist')
     });
 
     it('Закрытие по клику на оверлей', () => {
@@ -30,6 +31,7 @@ describe('Тесты для страницы конструктора бурге
         .contains('h3', 'Детали ингредиента')
         .get(`[data-cy=closeOverlay]`)
         .click({ force: true });
+      cy.get(`[data-cy=modals]`).find(`[data-cy=modal]`).should('not.exist')
     });
   });
 
@@ -39,6 +41,9 @@ describe('Тесты для страницы конструктора бурге
       cy.contains('li', 'Биокотлета из марсианской Магнолии')
         .find('button')
         .click();
+      cy.get('[data-cy=bunTop]').contains('span', 'Краторная булка N-200i').should('exist');
+      cy.get('[data-cy=ingredients]').contains('span', 'Биокотлета из марсианской Магнолии').should('exist');
+      cy.get('[data-cy=bunBottom]').contains('span', 'Краторная булка N-200i').should('exist');
     });
   });
 
@@ -56,20 +61,20 @@ describe('Тесты для страницы конструктора бурге
         .find('button')
         .click();
       cy.contains('button', 'Оформить заказ').click();
-      cy.contains('h2', '79748').should('exist');
+      cy.get(`[data-cy=modal]`).contains('h2', '79748').should('exist');
       cy.get(`[data-cy=modal]`)
         .contains('h2', '79748')
         .get(`[data-cy=closeButton]`)
         .click();
-      cy.contains('h2', '79748').should('not.exist');
-      cy.get('[data-cy=bunTop]').should('not.exist');
-      cy.get('[data-cy=ingredients]').should('not.exist');
-      cy.get('[data-cy=bunBottom]').should('not.exist');
+      cy.get(`[data-cy=modals]`).find(`[data-cy=modal]`).should('not.exist')
+      cy.get('[data-cy=bunTopIsMissing]').should('exist');
+      cy.get('[data-cy=ingredientsIsMissing]').should('exist');
+      cy.get('[data-cy=bunBottomIsMissing]').should('exist');
     });
 
     afterEach(() => {
-      cy.clearCookie('accessToken');
-      window.localStorage.removeItem('refreshToken');
+      cy.clearCookies();
+      cy.clearLocalStorage();
     });
   });
 });
